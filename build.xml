@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- ======================================================================
+     16.09.2013
+
+     GRITS MS object model library
+     
+     rene
+     ====================================================================== -->
+<project name="GRITSMS" basedir="." default="jar">
+
+	<property name="version.number" value="0.1"/>
+	
+	<!-- APPLIC PROPERTIES -->
+	<property name="bin.dir" location="bin"/>
+	<property name="src.dir" location="src"/>
+    <property name="lib.dir" location="lib"/>
+	
+    <!-- init -->
+	<target name="init" description="Initialization of the project.">
+		<delete dir="${bin.dir}"/>
+		<mkdir dir="${bin.dir}"/>
+	</target>
+	
+    <!-- compile -->
+	<target name="compile" depends="init" description="Compilation of the code.">
+		<javac destdir="${bin.dir}" debug="on" target="1.8">
+			<src path="${src.dir}"/>
+            <classpath>
+                <fileset dir="${lib.dir}"/>
+            </classpath>			
+		</javac>
+	</target>
+
+	<!-- converter -->
+    <target name="jar" depends="compile" description="Builds the jar.">
+		<buildnumber file="build.number"/>
+    	<jar destfile="GRITS.ms.om-${version.number}-b${build.number}.jar" basedir="${bin.dir}">
+		    <manifest>
+			    <attribute name="Created-By" value="Rene Ranzinger"/>
+				<attribute name="Implementation-Title" value="GRITS MS object model library"/>
+				<attribute name="Implementation-Version" value="${version.number}-b${build.number}"/>
+			</manifest>
+		</jar>	
+	</target>   
+	
+</project>
